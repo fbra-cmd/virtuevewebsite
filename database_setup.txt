@@ -1,0 +1,165 @@
+-- =====================================================
+-- VIRTUE DATABASE SETUP
+-- =====================================================
+-- Run this file to set up the database on a new PC
+--
+-- Steps:
+-- 1. Install PostgreSQL
+-- 2. Open psql or pgAdmin
+-- 3. Create database: CREATE DATABASE virtue;
+-- 4. Connect to it: \c virtue
+-- 5. Run this entire script
+-- =====================================================
+
+-- Drop existing tables (if they exist)
+DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS players_editors;
+DROP TABLE IF EXISTS leads;
+
+-- =====================================================
+-- CREATE TABLES
+-- =====================================================
+
+-- Leads table
+CREATE TABLE leads (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    valhalla_clips INTEGER DEFAULT 0,
+    avatar_url VARCHAR(500),
+    twitter_url VARCHAR(500),
+    youtube_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Players and Editors table
+CREATE TABLE players_editors (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL CHECK (role IN ('player', 'editor')),
+    recent_vid VARCHAR(500),
+    valhalla_clips INTEGER DEFAULT 0,
+    avatar_url VARCHAR(500),
+    twitter_url VARCHAR(500),
+    youtube_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Settings table (for featured valhalla player, etc.)
+CREATE TABLE settings (
+    key VARCHAR(100) PRIMARY KEY,
+    value TEXT
+);
+
+-- =====================================================
+-- INSERT LEADS
+-- =====================================================
+
+INSERT INTO leads (id, name, valhalla_clips, avatar_url, twitter_url, youtube_url) VALUES
+(1, 'Fex', 1, 'https://pbs.twimg.com/profile_images/2007607653862690816/xqSI_WJk_400x400.jpg', 'https://x.com/vamp1yrs', 'https://www.youtube.com/@Felix_2205'),
+(2, 'Zorz', 0, NULL, NULL, NULL),
+(3, 'Matt', 0, NULL, NULL, NULL);
+
+-- Reset the sequence to continue from the last ID
+SELECT setval('leads_id_seq', (SELECT MAX(id) FROM leads));
+
+-- =====================================================
+-- INSERT PLAYERS
+-- =====================================================
+
+INSERT INTO players_editors (id, name, role, recent_vid, valhalla_clips, avatar_url, twitter_url, youtube_url) VALUES
+(1, 'Airs', 'player', NULL, 0, NULL, NULL, NULL),
+(2, 'Angela', 'player', NULL, 0, NULL, NULL, NULL),
+(3, 'Arche', 'player', NULL, 0, NULL, NULL, NULL),
+(4, 'Bails', 'player', NULL, 0, NULL, NULL, NULL),
+(5, 'Bxn', 'player', NULL, 0, NULL, NULL, NULL),
+(6, 'Clue', 'player', NULL, 0, NULL, NULL, NULL),
+(7, 'Copes', 'player', NULL, 0, NULL, NULL, NULL),
+(8, 'Crakrz', 'player', NULL, 0, NULL, NULL, NULL),
+(9, 'Exlcs', 'player', NULL, 0, NULL, NULL, NULL),
+(10, 'Lukso', 'player', NULL, 0, NULL, NULL, NULL),
+(11, 'Gerilla', 'player', NULL, 0, NULL, NULL, NULL),
+(12, 'Hage', 'player', NULL, 0, NULL, NULL, NULL),
+(13, 'Hyb', 'player', NULL, 0, NULL, NULL, NULL),
+(14, 'Inks', 'player', NULL, 0, NULL, NULL, NULL),
+(15, 'Jokr', 'player', NULL, 0, NULL, NULL, NULL),
+(16, 'Josh', 'player', NULL, 0, NULL, NULL, NULL),
+(17, 'Kezr', 'player', NULL, 0, NULL, NULL, NULL),
+(18, 'Leyko', 'player', NULL, 0, NULL, NULL, NULL),
+(19, 'Murdr', 'player', NULL, 0, NULL, NULL, NULL),
+(20, 'Parks', 'player', NULL, 0, NULL, NULL, NULL),
+(21, 'Pexi', 'player', NULL, 0, NULL, NULL, NULL),
+(22, 'Pr1n', 'player', NULL, 0, NULL, NULL, NULL),
+(23, 'Pred', 'player', NULL, 0, NULL, NULL, NULL),
+(24, 'Prmzy', 'player', NULL, 0, NULL, NULL, NULL),
+(25, 'Raids', 'player', NULL, 0, NULL, NULL, NULL),
+(26, 'Rcky', 'player', NULL, 0, NULL, NULL, NULL),
+(27, 'Sfty', 'player', NULL, 0, NULL, NULL, NULL),
+(28, 'Smthy', 'player', NULL, 0, NULL, NULL, NULL),
+(29, 'Stx', 'player', NULL, 0, NULL, NULL, NULL),
+(30, 'T7ue', 'player', NULL, 0, NULL, NULL, NULL),
+(31, 'Teqhzi', 'player', NULL, 0, NULL, NULL, NULL),
+(32, 'Truth', 'player', NULL, 0, NULL, NULL, NULL),
+(33, 'Txnm', 'player', NULL, 0, NULL, NULL, NULL),
+(34, 'Vaasto', 'player', NULL, 0, NULL, NULL, NULL),
+(35, 'Virus', 'player', NULL, 0, NULL, NULL, NULL),
+(36, 'Wags', 'player', NULL, 0, NULL, NULL, NULL),
+(37, 'Wavy', 'player', NULL, 0, NULL, NULL, NULL),
+(38, 'Wigi', 'player', NULL, 0, NULL, NULL, NULL),
+(39, 'Slu', 'player', NULL, 0, NULL, NULL, NULL),
+(40, 'Cub', 'player', NULL, 0, NULL, NULL, NULL),
+(41, 'Wayne', 'player', NULL, 0, NULL, NULL, NULL),
+(42, 'Luke', 'player', NULL, 0, NULL, NULL, NULL),
+(43, 'Tenaz', 'player', NULL, 0, NULL, NULL, NULL),
+(44, 'Sfz', 'player', NULL, 0, NULL, NULL, NULL),
+(45, 'xRec', 'player', NULL, 0, NULL, NULL, NULL),
+(46, 'Serv', 'player', NULL, 0, NULL, NULL, NULL),
+(47, 'Yeka', 'player', NULL, 0, NULL, NULL, NULL),
+(48, 'Skyzz', 'player', NULL, 0, NULL, NULL, NULL),
+(49, 'Eros', 'player', NULL, 0, NULL, NULL, NULL),
+(50, 'Declan', 'player', NULL, 0, NULL, NULL, NULL),
+(51, 'Fred', 'player', NULL, 0, NULL, NULL, NULL),
+(52, 'Brady', 'player', NULL, 0, NULL, NULL, NULL),
+(53, 'Zkrm', 'player', NULL, 0, NULL, NULL, NULL),
+(54, 'Jyn', 'player', NULL, 0, NULL, NULL, NULL);
+
+-- Reset the sequence to continue from the last ID
+SELECT setval('players_editors_id_seq', (SELECT MAX(id) FROM players_editors));
+
+-- =====================================================
+-- INSERT SETTINGS
+-- =====================================================
+
+-- Featured Valhalla Clip player (format: "type:name" e.g. "player:Fex" or "lead:Fex")
+INSERT INTO settings (key, value) VALUES ('featured_valhalla_player', NULL);
+
+-- Home page featured video (YouTube video ID)
+INSERT INTO settings (key, value) VALUES ('home_featured_video', 'exvWgTTb61w');
+
+-- Home page recent videos (JSON array of {id, title} objects)
+INSERT INTO settings (key, value) VALUES ('home_recent_videos', '[{"id":"wqFkG48AHB4","title":"Recent Video 1"},{"id":"W27bosQ6Nhw","title":"Recent Video 2"},{"id":"ZB2mFI3kroc","title":"Recent Video 3"},{"id":"2ck8ymKZOmk","title":"Recent Video 4"}]');
+
+-- =====================================================
+-- VERIFY DATA
+-- =====================================================
+
+-- Check leads
+SELECT 'Leads count: ' || COUNT(*) FROM leads;
+
+-- Check players/editors
+SELECT 'Players/Editors count: ' || COUNT(*) FROM players_editors;
+
+-- =====================================================
+-- DONE!
+-- =====================================================
+-- Database: virtue
+-- Tables: leads, players_editors, settings
+-- Leads: 3 (Fex, Zorz, Matt)
+-- Players: 54
+-- Settings:
+--   - featured_valhalla_player (who is shown in "Most Recent Valhalla Clip")
+--   - home_featured_video (YouTube ID for hero video on home page)
+--   - home_recent_videos (JSON array of 4 recent videos for home page)
+--
+-- Don't forget to update server/.env with:
+-- DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/virtue
+-- =====================================================
