@@ -1,296 +1,364 @@
-# Deployment Guide
+# Deploying Virtue Website to Railway
 
-This guide covers deploying the Virtue website to a live URL.
+This guide walks you through deploying the Virtue website step by step. You have never deployed before, so every detail is covered. Read each step fully before doing it.
 
-## Option 1: Railway (Recommended - Easiest)
+---
 
-Railway offers free tier hosting with PostgreSQL included.
+## How Does This Work? (Quick Explanation)
 
-### Step 1: Prepare Your Code
+Your project has two parts:
+- **Client** (React frontend) - what users see in the browser
+- **Server** (Express backend) - the API that talks to the database
 
-1. Make sure all your code is committed to GitHub
-2. Push to a GitHub repository
+Locally, these run as two separate processes. But in production, the server does double duty: it runs the API **and** serves the built React files. So on Railway, you only need **one service** (not two). When you run `npm run build`, the React app gets compiled into static files in `client/dist/`. The Express server then serves those files to visitors.
 
-### Step 2: Create Railway Account
+Railway also gives you a **PostgreSQL database** in the cloud, so you don't need your other PC.
 
-1. Go to [railway.app](https://railway.app)
-2. Sign up with your GitHub account
+---
 
-### Step 3: Create New Project
+## BEFORE YOU START - Security Checklist
 
-1. Click "New Project"
-2. Select "Deploy from GitHub repo"
-3. Choose your repository
+**Your passwords and secrets must NEVER end up on GitHub.** Here's how to make sure:
 
-### Step 4: Add PostgreSQL Database
+### 1. Verify .env is gitignored
 
-1. In your Railway project, click "New"
-2. Select "Database" → "PostgreSQL"
-3. Wait for it to provision
+Your `.gitignore` already blocks `.env` files. Double-check by running:
 
-### Step 5: Configure Environment Variables
-
-Click on your web service and go to "Variables" tab. Add:
-
-```
-NODE_ENV=production
-PORT=5000
-ADMIN_PASSWORD=YourSecurePasswordHere
-CLIENT_URL=https://your-app-name.up.railway.app
+```bash
+git status
 ```
 
-For the database, Railway auto-injects `DATABASE_URL` when you link the PostgreSQL service.
+If you see any `.env` file listed there (not `.env.example`), STOP and do NOT commit. Remove it from tracking first:
 
-### Step 6: Link Database to Service
+```bash
+git rm --cached server/.env
+git rm --cached client/.env
+```
+
+### 2. Check what's actually in your repo
+
+Run this to make sure no secrets are already committed:
+
+```bash
+git log --all --full-history -- "*.env"
+git log --all --full-history -- "*/.env"
+```
+
+If either command shows results, your `.env` was committed at some point. Even if you deleted it later, it's still in your git history. In that case: **change all your passwords** after deploying (especially your ADMIN_PASSWORD). The old password would still be visible in the git history.
+
+### 3. What files contain secrets
+
+These files have secrets and must **NEVER** be committed:
+- `server/.env` - contains ADMIN_PASSWORD, DATABASE_URL
+
+These files are safe to commit (they are templates with no real values):
+- `server/.env.example`
+- `client/.env.example`
+
+---
+
+## Step 1: Push Your Code to GitHub
+
+If you don't have a GitHub repo yet:
+
+1. Go to github.com and create a **new repository**
+2. Make it **private** (your code, your choice - but private is safer)
+3. Do NOT check "Add a README" or ".gitignore" (you already have these)
+4. GitHub will show you commands. Run these in your project folder:
+
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+git push -u origin main
+```
+
+If you already have a GitHub repo, just make sure everything is committed and pushed:
+
+```bash
+git add -A
+git status
+```
+
+**STOP AND CHECK:** Look at the `git status` output. Make sure no `.env` file is listed. If it is, go back to the security checklist above. If it's clean, continue:
+
+```bash
+git commit -m "prepare for deployment"
+git push
+```
+
+---
+
+## Step 2: Create a Railway Account
+
+1. Go to **railway.app**
+2. Click **"Login"** in the top right
+3. Sign up with your **GitHub account** (this makes connecting your repo easier)
+4. You may need to verify your email
+
+---
+
+## Step 3: Create a New Project on Railway
+
+1. In the Railway dashboard, click **"New Project"**
+2. Select **"Deploy from GitHub repo"**
+3. If Railway asks for GitHub permissions, grant them
+4. Find and select your repository from the list
+5. Railway will create a service and start trying to deploy - **it will fail** because we haven't set up the database and environment variables yet. That's fine, don't worry.
+
+---
+
+## Step 4: Add a PostgreSQL Database
+
+1. Inside your Railway project, click the **"+ New"** button (top right of the project canvas)
+2. Select **"Database"**
+3. Select **"Add PostgreSQL"**
+4. Wait a few seconds for it to provision (you'll see it appear on the canvas)
+
+---
+
+## Step 5: Link the Database to Your Service
+
+1. Click on your **web service** (the one connected to your GitHub repo, NOT the database)
+2. Go to the **"Variables"** tab
+3. Click **"Add Reference Variable"**
+4. You'll see your PostgreSQL database listed - select `DATABASE_URL`
+5. Click **"Add"**
+
+This makes Railway automatically inject the database connection string into your server. You don't need to copy any database URLs manually.
+
+---
+
+## Step 6: Set Environment Variables
+
+Still in the **"Variables"** tab of your web service, click **"New Variable"** for each of these:
+
+| Variable | Value | Notes |
+|----------|-------|-------|
+| `NODE_ENV` | `production` | Tells the server to serve the React build |
+| `PORT` | `5000` | The port your server listens on |
+| `ADMIN_PASSWORD` | *(pick a strong password)* | This is the password for your /admin page. Use something long with letters, numbers, and symbols. **Do NOT use the same password as your other accounts.** |
+| `CLIENT_URL` | *(leave empty for now)* | We'll fill this in after Step 9 when we get the domain |
+
+**About ADMIN_PASSWORD:** This is the single password that protects your /admin dashboard. Anyone who knows it can edit your roster, change videos, etc. Pick something strong like `Virt!ue2024$Sec` (but not that exact one obviously).
+
+---
+
+## Step 7: Configure Build and Start Commands
 
 1. Click on your web service
-2. Go to "Variables"
-3. Click "Add Reference"
-4. Select your PostgreSQL database
-5. This adds the `DATABASE_URL` automatically
-
-### Step 7: Configure Build Settings
-
-In your service settings, set:
-
-- **Build Command:** `npm run install:all && npm run build`
-- **Start Command:** `npm start`
-- **Root Directory:** `/` (leave empty)
-
-### Step 8: Set Up Database Tables
-
-1. Click on your PostgreSQL database
-2. Go to "Data" tab
-3. Open the SQL query tool
-4. Copy and paste the contents of `database_setup.txt`
-5. Run the query
-
-### Step 9: Generate Domain
-
-1. Click on your web service
-2. Go to "Settings"
-3. Under "Domains", click "Generate Domain"
-4. Your site is now live!
-
----
-
-## Option 2: Render
-
-### Step 1: Create Render Account
-
-1. Go to [render.com](https://render.com)
-2. Sign up with GitHub
-
-### Step 2: Create PostgreSQL Database
-
-1. Click "New" → "PostgreSQL"
-2. Choose a name (e.g., `virtue-db`)
-3. Select free tier
-4. Click "Create Database"
-5. Copy the "External Database URL"
-
-### Step 3: Create Web Service
-
-1. Click "New" → "Web Service"
-2. Connect your GitHub repository
-3. Configure:
-   - **Name:** virtue-website
-   - **Build Command:** `npm run install:all && npm run build`
-   - **Start Command:** `npm start`
-
-### Step 4: Add Environment Variables
-
-In the web service settings, add:
+2. Go to the **"Settings"** tab
+3. Scroll down to **"Build Command"** and set it to:
 
 ```
-NODE_ENV=production
-PORT=5000
-DATABASE_URL=<paste your PostgreSQL external URL here>
-ADMIN_PASSWORD=YourSecurePasswordHere
-CLIENT_URL=https://virtue-website.onrender.com
+npm run install:all && npm run build
 ```
 
-### Step 5: Deploy
+4. Set the **"Start Command"** to:
 
-1. Click "Create Web Service"
-2. Wait for deployment to complete
-3. Run the database setup SQL via Render's PostgreSQL dashboard
-
----
-
-## Option 3: VPS (DigitalOcean, Hetzner, etc.)
-
-For more control, deploy to a VPS.
-
-### Step 1: Set Up Server
-
-```bash
-# SSH into your server
-ssh root@your-server-ip
-
-# Update system
-apt update && apt upgrade -y
-
-# Install Node.js 20
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-apt install -y nodejs
-
-# Install PostgreSQL
-apt install -y postgresql postgresql-contrib
-
-# Install nginx
-apt install -y nginx
-
-# Install PM2 (process manager)
-npm install -g pm2
 ```
-
-### Step 2: Set Up PostgreSQL
-
-```bash
-# Switch to postgres user
-sudo -u postgres psql
-
-# Create database and user
-CREATE DATABASE virtue;
-CREATE USER virtueuser WITH ENCRYPTED PASSWORD 'your-password';
-GRANT ALL PRIVILEGES ON DATABASE virtue TO virtueuser;
-\q
-
-# Connect and run setup
-psql -U virtueuser -d virtue -f database_setup.txt
-```
-
-### Step 3: Clone and Build
-
-```bash
-# Clone your repository
-cd /var/www
-git clone https://github.com/yourusername/virtue-website.git
-cd virtue-website
-
-# Install dependencies
-npm run install:all
-
-# Build frontend
-npm run build
-
-# Create .env file
-cat > server/.env << EOF
-NODE_ENV=production
-PORT=5000
-DATABASE_URL=postgresql://virtueuser:your-password@localhost:5432/virtue
-ADMIN_PASSWORD=YourSecurePasswordHere
-CLIENT_URL=https://yourdomain.com
-EOF
-```
-
-### Step 4: Configure Nginx
-
-```bash
-# Create nginx config
-cat > /etc/nginx/sites-available/virtue << 'EOF'
-server {
-    listen 80;
-    server_name yourdomain.com www.yourdomain.com;
-
-    location / {
-        proxy_pass http://localhost:5000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-EOF
-
-# Enable site
-ln -s /etc/nginx/sites-available/virtue /etc/nginx/sites-enabled/
-nginx -t
-systemctl restart nginx
-```
-
-### Step 5: Start with PM2
-
-```bash
-cd /var/www/virtue-website
-pm2 start npm --name "virtue" -- start
-pm2 save
-pm2 startup
-```
-
-### Step 6: Add SSL (HTTPS)
-
-```bash
-# Install Certbot
-apt install -y certbot python3-certbot-nginx
-
-# Get certificate
-certbot --nginx -d yourdomain.com -d www.yourdomain.com
-```
-
----
-
-## Quick Reference
-
-### Environment Variables
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `NODE_ENV` | Environment mode | `production` |
-| `PORT` | Server port | `5000` |
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@host:5432/dbname` |
-| `ADMIN_PASSWORD` | Password for /admin page | `YourSecurePassword123!` |
-| `CLIENT_URL` | Your site's URL (for CORS) | `https://virtue.com` |
-
-### Useful Commands
-
-```bash
-# Build frontend
-npm run build
-
-# Start production server
 npm start
-
-# View logs (if using PM2)
-pm2 logs virtue
-
-# Restart server (if using PM2)
-pm2 restart virtue
 ```
 
-### Updating the Site
+5. Make sure **"Root Directory"** is empty (or `/`)
+
+**What these do:**
+- `npm run install:all` installs dependencies in root, server, and client folders
+- `npm run build` compiles the React frontend into static files
+- `npm start` runs the Express server (which serves the API + the compiled React files)
+
+---
+
+## Step 8: Set Up the Database (Migrate Your Data From Your Other PC)
+
+You already have a database with real data on your other PC. Here's how to get that data into Railway.
+
+### Option A: Export from your PC, import into Railway (recommended)
+
+**On your other PC**, open a terminal and run this to export your entire database:
 
 ```bash
-# Pull latest changes
-git pull
-
-# Rebuild frontend
-npm run build
-
-# Restart server
-pm2 restart virtue
+pg_dump -U YOUR_DB_USERNAME -d YOUR_DB_NAME --no-owner --no-acl > virtue_backup.sql
 ```
+
+It will ask for your local database password. This creates a file `virtue_backup.sql` with all your tables AND data.
+
+**Now import it into Railway:**
+
+1. Click on your **PostgreSQL database** on the Railway project canvas
+2. Go to the **"Connect"** tab
+3. You'll see connection details (host, port, username, password, database name). Copy the **connection string** (looks like `postgresql://postgres:xxxx@xxxx.railway.app:5432/railway`)
+4. On your other PC, run:
+
+```bash
+psql "YOUR_RAILWAY_CONNECTION_STRING" < virtue_backup.sql
+```
+
+Replace `YOUR_RAILWAY_CONNECTION_STRING` with the connection string from Railway. This uploads all your tables and data directly.
+
+5. If you get errors about tables already existing, that's fine - the `IF NOT EXISTS` clauses handle it.
+
+**Important:** Make sure the `settings` table gets created. If your local database didn't have it, go to Railway's database **"Data"** tab, click **"Query"**, and run:
+
+```sql
+CREATE TABLE IF NOT EXISTS settings (
+    id SERIAL PRIMARY KEY,
+    key VARCHAR(255) NOT NULL UNIQUE,
+    value TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Option B: Create empty tables and re-add data through /admin
+
+If you don't want to deal with pg_dump, you can create the tables fresh and add everything manually through the admin panel.
+
+1. Click on your **PostgreSQL database** on the project canvas
+2. Go to the **"Data"** tab
+3. Click **"Query"** (opens an SQL editor)
+4. Copy and paste this entire SQL block and click **"Run"**:
+
+```sql
+CREATE TABLE IF NOT EXISTS players_editors (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL CHECK (role IN ('player', 'editor')),
+    recent_vid VARCHAR(500),
+    valhalla_clips INTEGER DEFAULT 0,
+    avatar_url VARCHAR(500),
+    twitter_url VARCHAR(500),
+    youtube_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS leads (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    valhalla_clips INTEGER DEFAULT 0,
+    avatar_url VARCHAR(500),
+    twitter_url VARCHAR(500),
+    youtube_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS settings (
+    id SERIAL PRIMARY KEY,
+    key VARCHAR(255) NOT NULL UNIQUE,
+    value TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+5. Then go to `https://your-domain.up.railway.app/admin` and add your leads, players, and editors manually.
+
+---
+
+## Step 9: Generate a Domain and Set CLIENT_URL
+
+1. Click on your **web service**
+2. Go to the **"Settings"** tab
+3. Scroll down to **"Networking"** / **"Domains"**
+4. Click **"Generate Domain"**
+5. Railway gives you a URL like `your-app-name-production.up.railway.app`
+6. **Copy that full URL** (including the `https://`)
+
+Now go back and set the CLIENT_URL variable:
+
+1. Go to the **"Variables"** tab
+2. Click on `CLIENT_URL` (or add it if you left it empty before)
+3. Set the value to your Railway domain, e.g. `https://your-app-name-production.up.railway.app`
+4. **Important:** No trailing slash! Just `https://your-domain.up.railway.app`
+
+This tells your server which domain is allowed to make API requests (CORS). Without it, your frontend can't talk to your backend.
+
+---
+
+## Step 10: Trigger a Redeploy
+
+After setting all variables, Railway should automatically redeploy. If it doesn't:
+
+1. Click on your web service
+2. Go to **"Deployments"** tab
+3. Click **"Redeploy"** on the latest deployment
+
+Wait for the build to complete (usually 1-3 minutes). Watch the build logs - if everything worked, you'll see:
+```
+Server running on port 5000
+Environment: production
+```
+
+---
+
+## Step 11: Add Your Data
+
+Your site is now live but the roster is empty. Go to:
+
+```
+https://your-domain.up.railway.app/admin
+```
+
+Log in with the ADMIN_PASSWORD you set in Step 6. From here you can add all your leads, players, and editors through the admin panel.
 
 ---
 
 ## Troubleshooting
 
-### Database Connection Issues
-- Verify `DATABASE_URL` is correct
-- Check if PostgreSQL is running
-- Ensure database user has proper permissions
+### Build fails with "npm run build" error
+- Check the build logs in Railway (click on the deployment)
+- Usually means a dependency issue - make sure `npm run install:all` is part of the build command
 
-### CORS Errors
-- Make sure `CLIENT_URL` matches your actual domain
-- Include `https://` in the URL
+### Site loads but shows blank page
+- Make sure `NODE_ENV` is set to `production` (this is what makes the server serve the React files)
+- Check that the build command includes `npm run build`
 
-### Admin Login Not Working
-- Check `ADMIN_PASSWORD` environment variable is set
+### "CORS error" in browser console
+- Your `CLIENT_URL` doesn't match your actual Railway domain
+- Make sure it's the exact URL with `https://`, no trailing slash
+- Example: `https://virtue-production.up.railway.app`
+
+### Admin login doesn't work
+- Check that `ADMIN_PASSWORD` is set in Railway variables
 - Password is case-sensitive
+- If you changed it, redeploy or restart the service
 
-### Blank Page / React Routes Not Working
-- Ensure `NODE_ENV=production` is set
-- Verify the build completed successfully
-- Check that nginx (or your host) is configured for SPA routing
+### Database connection error
+- Make sure you linked the PostgreSQL database (Step 5)
+- Check that `DATABASE_URL` appears in your variables tab as a reference variable
+- Make sure you ran the SQL in Step 8
+
+### "relation 'settings' does not exist"
+- You forgot to run the SQL from Step 8, or you only ran part of it
+- Go to the database Data tab and run the full SQL again
+
+---
+
+## Updating Your Site After Deployment
+
+Whenever you make changes locally:
+
+```bash
+git add -A
+git status          # <-- always check this, make sure no .env files
+git commit -m "your description of changes"
+git push
+```
+
+Railway automatically detects the push and redeploys. You don't need to do anything else.
+
+---
+
+## Environment Variables Reference
+
+| Variable | Where to Set | Value |
+|----------|-------------|-------|
+| `NODE_ENV` | Railway Variables | `production` |
+| `PORT` | Railway Variables | `5000` |
+| `DATABASE_URL` | Railway Reference Variable (auto) | Set automatically when you link the database |
+| `ADMIN_PASSWORD` | Railway Variables | Your secret admin password |
+| `CLIENT_URL` | Railway Variables | Your Railway domain URL (e.g. `https://xyz.up.railway.app`) |
+
+**None of these go in your code or on GitHub.** They only exist in Railway's dashboard.
+
+---
+
+## Cost
+
+Railway has a free trial with $5 of credits. After that it's usage-based (usually a few dollars per month for a small site like this). Keep an eye on your usage in the Railway dashboard.
