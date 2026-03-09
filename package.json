@@ -9,7 +9,7 @@
     "build": "cd client && npm run build",
     "start": "cd server && npm start",
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
-    "railway-build": "NPM_CONFIG_PRODUCTION=false npm install && cd server && NPM_CONFIG_PRODUCTION=false npm install && cd ../client && NPM_CONFIG_PRODUCTION=false npm install && npm run build"
+    "railway-build": "npm install --include=dev && cd server && npm install && cd ../client && npm install --include=dev && npm run build"
   },
   "dependencies": {
     "concurrently": "^8.2.2"
