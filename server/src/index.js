@@ -10,7 +10,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:", "http:"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://youtube.com"],
+      connectSrc: ["'self'"],
+    },
+  },
+}));
 
 // CORS configuration - important for production
 const corsOptions = {
