@@ -9,7 +9,7 @@
     "build": "cd client && npm run build",
     "start": "cd server && npm start",
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
-    "railway-build": "npm install --include=dev && cd server && npm install && cd ../client && npm install --include=dev && npm run build"
+    "railway-build": "NODE_ENV=development npm install && cd server && npm install && cd ../client && NODE_ENV=development npm install && npx vite build"
   },
   "dependencies": {
     "concurrently": "^8.2.2"
