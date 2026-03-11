@@ -270,16 +270,16 @@
   }
 
   .featured-player-container .member-avatar {
-    width: 160px;
-    height: 160px;
+    width: 185px;
+    height: 185px;
   }
 
   .featured-player-container .member-name {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
   }
 
   .featured-player-container .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 }
 
@@ -287,5 +287,22 @@
   .members-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
+  }
+
+  .featured-valhalla-section {
+    padding: 2.5rem 0.5rem;
+  }
+
+  .featured-player-container .member-avatar {
+    width: 210px;
+    height: 210px;
+  }
+
+  .featured-player-container .member-name {
+    font-size: 1.5rem;
+  }
+
+  .featured-player-container .stat-value {
+    font-size: 1.85rem;
   }
 }

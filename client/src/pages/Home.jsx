@@ -155,7 +155,7 @@ function Home() {
 
       {topMembers.length > 0 && (
         <section className="top-members">
-          <h2 className="section-title">Top Performers</h2>
+          <h2 className="section-title">Most Valhalla Clips</h2>
           <div className="top-members-grid">
             {topMembers.map((member, index) => (
               <div key={member.id} className={`top-member-wrapper rank-${index + 1}`}>
