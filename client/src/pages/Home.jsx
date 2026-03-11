@@ -4,9 +4,12 @@ import './Home.css';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 
+const HERO_GIFS = ['/Final150RenderREV2_7.gif', '/Final150RenderREV2_9.gif'];
+
 function Home() {
   const [topMembers, setTopMembers] = useState([]);
   const [featuredVideoId, setFeaturedVideoId] = useState('exvWgTTb61w');
+  const [heroGif] = useState(() => HERO_GIFS[Math.floor(Math.random() * HERO_GIFS.length)]);
   const [recentVideos, setRecentVideos] = useState([
     { id: 'wqFkG48AHB4', title: 'Recent Video 1' },
     { id: 'W27bosQ6Nhw', title: 'Recent Video 2' },
@@ -74,15 +77,14 @@ function Home() {
           <p className="hero-subtitle">Valhalla</p>
         </div>
         <div className="hero-video">
-          <div className="video-container">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${featuredVideoId}?autoplay=1&mute=1&rel=0&loop=1&playlist=${featuredVideoId}&start=6`}
-              title="Virtue Featured Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <a
+            href="https://youtu.be/exvWgTTb61w?si=1QBXOUnTpoYERF0x"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-gif-link"
+          >
+            <img src={heroGif} alt="Virtue Featured" className="hero-gif" />
+          </a>
         </div>
       </section>
 
