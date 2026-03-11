@@ -76,7 +76,7 @@ function Home() {
         <div className="hero-video">
           <div className="video-container">
             <iframe
-              src={`https://www.youtube.com/embed/${featuredVideoId}?autoplay=1&mute=1&rel=0&modestbranding=1&loop=1&playlist=${featuredVideoId}&start=6`}
+              src={`https://www.youtube-nocookie.com/embed/${featuredVideoId}?autoplay=1&mute=1&rel=0&loop=1&playlist=${featuredVideoId}&start=6`}
               title="Virtue Featured Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -155,7 +155,7 @@ function Home() {
 
       {topMembers.length > 0 && (
         <section className="top-members">
-          <h2 className="section-title">Top Performers</h2>
+          <h2 className="section-title">Most Valhalla Clips</h2>
           <div className="top-members-grid">
             {topMembers.map((member, index) => (
               <div key={member.id} className={`top-member-wrapper rank-${index + 1}`}>

@@ -10,7 +10,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://www.youtube.com", "https://s.ytimg.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:", "http:"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://youtube.com", "https://www.youtube-nocookie.com"],
+      childSrc: ["'self'", "https://www.youtube.com"],
+      connectSrc: ["'self'", "https://www.youtube.com"],
+      mediaSrc: ["'self'", "https://www.youtube.com", "https://*.googlevideo.com"],
+      workerSrc: ["'self'", "blob:"],
+    },
+  },
+}));
 
 // CORS configuration - important for production
 const corsOptions = {
