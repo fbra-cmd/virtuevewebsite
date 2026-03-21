@@ -98,12 +98,18 @@
   height: 500px;
   background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(236, 72, 153, 0.04) 40%, transparent 70%);
   pointer-events: none;
-  animation: pulse-glow 5s ease-in-out infinite;
+  animation: pulse-glow 5s ease-in-out infinite, glow-color-shift 6s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
   50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@keyframes glow-color-shift {
+  0%, 100% { background: radial-gradient(circle, rgba(220, 40, 40, 0.08) 0%, rgba(220, 40, 40, 0.04) 40%, transparent 70%); }
+  33% { background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.04) 40%, transparent 70%); }
+  66% { background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.04) 40%, transparent 70%); }
 }
 
 .featured-title {
@@ -143,14 +149,21 @@
   height: 200px;
   border: 2px solid transparent;
   background: linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-              linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #8b5cf6 100%) border-box;
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), 0 0 60px rgba(236, 72, 153, 0.1);
-  animation: avatar-glow 4s ease-in-out infinite;
+              linear-gradient(135deg, #dc2828 0%, #8b5cf6 50%, #3b82f6 100%) border-box;
+  background-size: 300% 300%;
+  animation: avatar-glow 6s ease-in-out infinite, avatar-border-shift 6s ease-in-out infinite;
 }
 
 @keyframes avatar-glow {
-  0%, 100% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), 0 0 60px rgba(236, 72, 153, 0.1); }
-  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.3), 0 0 70px rgba(236, 72, 153, 0.15); }
+  0%, 100% { box-shadow: 0 0 30px rgba(220, 40, 40, 0.2), 0 0 60px rgba(220, 40, 40, 0.1); }
+  33% { box-shadow: 0 0 35px rgba(139, 92, 246, 0.25), 0 0 65px rgba(139, 92, 246, 0.12); }
+  66% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.25), 0 0 65px rgba(59, 130, 246, 0.12); }
+}
+
+@keyframes avatar-border-shift {
+  0%, 100% { background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(135deg, #dc2828, #8b5cf6) border-box; }
+  33% { background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(135deg, #8b5cf6, #3b82f6) border-box; }
+  66% { background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(135deg, #3b82f6, #dc2828) border-box; }
 }
 
 .featured-player-container .member-avatar img {
@@ -170,10 +183,18 @@
 .featured-player-container .stat-value {
   font-size: 1.75rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  background: linear-gradient(135deg, #dc2828 0%, #8b5cf6 50%, #3b82f6 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: text-color-shift 6s ease-in-out infinite;
+}
+
+@keyframes text-color-shift {
+  0%, 100% { background-position: 0% 50%; }
+  33% { background-position: 50% 50%; }
+  66% { background-position: 100% 50%; }
 }
 
 .featured-player-container .stat-label {

@@ -1,13 +1,23 @@
 import './MemberCard.css';
 
 function MemberCard({ member, showRecentVid = false }) {
+  const hasAvatar = member.avatar_url && member.avatar_url.trim() !== '';
+
   return (
     <div className="member-card">
       <div className="member-avatar">
-        <img
-          src={member.avatar_url || 'https://via.placeholder.com/1000x1000?text=Avatar'}
-          alt={member.name}
-        />
+        {hasAvatar ? (
+          <img
+            src={member.avatar_url}
+            alt={member.name}
+          />
+        ) : (
+          <div className="default-avatar">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+        )}
       </div>
       <div className="member-info">
         <h3 className="member-name">{member.name}</h3>
