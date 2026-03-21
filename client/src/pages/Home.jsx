@@ -4,12 +4,12 @@ import './Home.css';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 
-const HERO_GIFS = ['/Final150RenderREV2_7.gif', '/Final150RenderREV2_9.gif'];
+const HERO_VIDEOS = ['/hero-7.mp4', '/hero-9.mp4'];
 
 function Home() {
   const [topMembers, setTopMembers] = useState([]);
   const [featuredVideoId, setFeaturedVideoId] = useState('exvWgTTb61w');
-  const [heroGif] = useState(() => HERO_GIFS[Math.floor(Math.random() * HERO_GIFS.length)]);
+  const [heroVideo] = useState(() => HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)]);
   const [recentVideos, setRecentVideos] = useState([
     { id: 'wqFkG48AHB4', title: 'Recent Video 1' },
     { id: 'W27bosQ6Nhw', title: 'Recent Video 2' },
@@ -83,7 +83,14 @@ function Home() {
             rel="noopener noreferrer"
             className="hero-gif-link"
           >
-            <img src={heroGif} alt="Virtue Featured" className="hero-gif" />
+            <video
+              src={heroVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="hero-gif"
+            />
           </a>
         </div>
       </section>

@@ -7,28 +7,13 @@ import Roster from './pages/Roster';
 import Admin from './pages/Admin';
 import './index.css';
 
-const PRELOAD_ASSETS = [
-  '/virtue-flat-logo.png',
-  '/logo.png',
-  '/Final150RenderREV2_7.gif',
-  '/Final150RenderREV2_9.gif',
-];
-
 function LoadingScreen({ onLoaded }) {
   useEffect(() => {
-    const promises = PRELOAD_ASSETS.map(
-      (src) =>
-        new Promise((resolve) => {
-          const img = new Image();
-          img.onload = resolve;
-          img.onerror = resolve;
-          img.src = src;
-        })
-    );
-
-    Promise.all(promises).then(() => {
-      setTimeout(() => onLoaded(), 400);
-    });
+    // Just preload the small logo, the video loads fast enough on its own
+    const img = new Image();
+    img.onload = () => setTimeout(() => onLoaded(), 300);
+    img.onerror = () => setTimeout(() => onLoaded(), 300);
+    img.src = '/virtue-flat-logo.png';
   }, [onLoaded]);
 
   return (
