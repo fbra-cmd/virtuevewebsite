@@ -96,7 +96,7 @@
 }
 
 .egg-sticky-image img {
-  width: 110px;
+  width: 440px;
   height: auto;
   opacity: 0.9;
   border-radius: 12px;
@@ -109,7 +109,7 @@
   }
 
   .egg-sticky-image img {
-    width: 80px;
+    width: 280px;
   }
 }
 
@@ -121,7 +121,8 @@
 }
 
 .egg-roster-bottom img {
-  width: 200px;
+  width: 800px;
+  max-width: 90vw;
   height: auto;
   border-radius: 12px;
   opacity: 0.9;
