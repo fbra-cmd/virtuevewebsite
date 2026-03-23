@@ -67,6 +67,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text);
+  -webkit-text-fill-color: var(--text);
   margin: 0;
   letter-spacing: 0.02em;
   opacity: 0.95;
@@ -89,6 +90,7 @@
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--text);
+  -webkit-text-fill-color: var(--text);
   opacity: 0.9;
 }
 
