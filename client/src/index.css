@@ -86,13 +86,20 @@
   filter: none !important;
 }
 
-/* Sticky easter egg image */
+/* Sticky easter egg images */
 .egg-sticky-image {
   position: fixed;
   bottom: 1rem;
-  right: 1rem;
   z-index: 999;
   pointer-events: none;
+}
+
+.egg-sticky-right {
+  right: 1rem;
+}
+
+.egg-sticky-left {
+  left: 1rem;
 }
 
 .egg-sticky-image img {
@@ -105,7 +112,14 @@
 @media (max-width: 768px) {
   .egg-sticky-image {
     bottom: 5rem;
+  }
+
+  .egg-sticky-right {
     right: 0.5rem;
+  }
+
+  .egg-sticky-left {
+    left: 0.5rem;
   }
 
   .egg-sticky-image img {
