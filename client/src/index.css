@@ -113,16 +113,6 @@
   .egg-sticky-image {
     display: none;
   }
-
-  .egg-sticky-right {
-    display: block;
-    bottom: 5rem;
-    right: 0.5rem;
-  }
-
-  .egg-sticky-right img {
-    width: 80px;
-  }
 }
 
 /* Roster bottom easter egg image */
