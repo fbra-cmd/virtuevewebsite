@@ -111,19 +111,17 @@
 
 @media (max-width: 768px) {
   .egg-sticky-image {
-    bottom: 5rem;
+    display: none;
   }
 
   .egg-sticky-right {
+    display: block;
+    bottom: 5rem;
     right: 0.5rem;
   }
 
-  .egg-sticky-left {
-    left: 0.5rem;
-  }
-
-  .egg-sticky-image img {
-    width: 280px;
+  .egg-sticky-right img {
+    width: 80px;
   }
 }
 
