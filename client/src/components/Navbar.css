@@ -195,6 +195,12 @@
   .mobile-tab.active {
     color: var(--text);
   }
+
+  .mobile-theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 }
 
 @media (max-width: 480px) {
