@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import MemberCard from '../components/MemberCard';
+import { useEasterEgg } from '../EasterEggContext';
 import './Roster.css';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
@@ -50,6 +51,7 @@ const MOCK_DATA = {
 };
 
 function Roster() {
+  const { easterEgg } = useEasterEgg();
   const [roster, setRoster] = useState({ leads: [], players: [], editors: [] });
   const [featuredPlayer, setFeaturedPlayer] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -167,6 +169,12 @@ function Roster() {
 
         {searchQuery && filteredLeads.length === 0 && filteredPlayers.length === 0 && filteredEditors.length === 0 && (
           <p className="no-results">No members found for "{searchQuery}"</p>
+        )}
+
+        {easterEgg === 'fex' && (
+          <div className="egg-roster-bottom">
+            <img src="/click_fex_2.png" alt="" />
+          </div>
         )}
       </div>
     </div>

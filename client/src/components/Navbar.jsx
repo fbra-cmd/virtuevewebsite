@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useEasterEgg } from '../EasterEggContext';
 import './Navbar.css';
 
 function Navbar() {
+  const { easterEgg } = useEasterEgg();
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'dark';
   });
@@ -82,7 +84,13 @@ function Navbar() {
         </div>
 
         <NavLink to="/" className="navbar-logo">
-          <img src="/logo.png" alt="Virtue" />
+          {easterEgg === 'fex' ? (
+            <img src="/click_fex_1.png" alt="Virtue" className="egg-logo" />
+          ) : easterEgg === 'matt' ? (
+            <img src="/burger.png" alt="Virtue" className="egg-logo" />
+          ) : (
+            <img src="/logo.png" alt="Virtue" />
+          )}
         </NavLink>
       </div>
     </nav>

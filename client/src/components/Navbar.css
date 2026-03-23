@@ -118,6 +118,11 @@
   filter: invert(1);
 }
 
+.navbar-logo .egg-logo {
+  filter: none !important;
+  object-fit: contain;
+}
+
 /* Mobile bottom bar - hidden on desktop */
 .mobile-bottom-bar {
   display: none;

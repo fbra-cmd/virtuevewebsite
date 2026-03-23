@@ -5,11 +5,11 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Roster from './pages/Roster';
 import Admin from './pages/Admin';
+import { EasterEggProvider, useEasterEgg } from './EasterEggContext';
 import './index.css';
 
 function LoadingScreen({ onLoaded }) {
   useEffect(() => {
-    // Just preload the small logo, the video loads fast enough on its own
     const img = new Image();
     img.onload = () => setTimeout(() => onLoaded(), 300);
     img.onerror = () => setTimeout(() => onLoaded(), 300);
@@ -24,9 +24,27 @@ function LoadingScreen({ onLoaded }) {
   );
 }
 
+function EasterEggEffects() {
+  const { easterEgg } = useEasterEgg();
+
+  useEffect(() => {
+    if (easterEgg === 'fex') {
+      document.documentElement.setAttribute('data-egg', 'fex');
+    } else if (easterEgg === 'matt') {
+      document.documentElement.setAttribute('data-egg', 'matt');
+    } else {
+      document.documentElement.removeAttribute('data-egg');
+    }
+    return () => document.documentElement.removeAttribute('data-egg');
+  }, [easterEgg]);
+
+  return null;
+}
+
 function AppContent() {
   const location = useLocation();
   const isAdminPage = location.pathname === '/admin';
+  const { easterEgg } = useEasterEgg();
 
   return (
     <div className="app">
@@ -39,6 +57,13 @@ function AppContent() {
         </Routes>
       </main>
       {!isAdminPage && <Footer />}
+
+      {/* Fex easter egg: sticky image at bottom of screen on home */}
+      {easterEgg === 'fex' && (
+        <div className="egg-sticky-image">
+          <img src="/click_fex_3.png" alt="" />
+        </div>
+      )}
     </div>
   );
 }
@@ -53,14 +78,17 @@ function App() {
   };
 
   return (
-    <Router>
-      {loading && (
-        <div className={`loading-overlay ${fadeOut ? 'fade-out' : ''}`}>
-          <LoadingScreen onLoaded={handleLoaded} />
-        </div>
-      )}
-      <AppContent />
-    </Router>
+    <EasterEggProvider>
+      <Router>
+        <EasterEggEffects />
+        {loading && (
+          <div className={`loading-overlay ${fadeOut ? 'fade-out' : ''}`}>
+            <LoadingScreen onLoaded={handleLoaded} />
+          </div>
+        )}
+        <AppContent />
+      </Router>
+    </EasterEggProvider>
   );
 }
 
