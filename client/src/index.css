@@ -1,3 +1,56 @@
+/* Theme Variables */
+:root {
+  --bg: #0a0a0a;
+  --bg-rgb: 10, 10, 10;
+  --text: #fff;
+  --text-rgb: 255, 255, 255;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-subtle: rgba(255, 255, 255, 0.4);
+  --text-faint: rgba(255, 255, 255, 0.35);
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --card-border: rgba(255, 255, 255, 0.04);
+  --card-hover-bg: rgba(255, 255, 255, 0.04);
+  --card-hover-border: rgba(255, 255, 255, 0.08);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-focus-border: rgba(255, 255, 255, 0.25);
+  --nav-bg: rgba(10, 10, 10, 0.4);
+  --nav-bottom-bg: rgba(10, 10, 10, 0.95);
+  --gradient-spot-1: rgba(40, 40, 45, 0.4);
+  --gradient-spot-2: rgba(35, 35, 40, 0.3);
+  --gradient-spot-3: rgba(25, 25, 30, 0.2);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --avatar-inner-bg: #0a0a0a;
+}
+
+[data-theme="light"] {
+  --bg: #f5f5f5;
+  --bg-rgb: 245, 245, 245;
+  --text: #111;
+  --text-rgb: 17, 17, 17;
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --text-subtle: rgba(0, 0, 0, 0.45);
+  --text-faint: rgba(0, 0, 0, 0.35);
+  --card-bg: rgba(0, 0, 0, 0.03);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-hover-bg: rgba(0, 0, 0, 0.05);
+  --card-hover-border: rgba(0, 0, 0, 0.12);
+  --input-bg: rgba(0, 0, 0, 0.04);
+  --input-border: rgba(0, 0, 0, 0.12);
+  --input-focus-border: rgba(0, 0, 0, 0.3);
+  --nav-bg: rgba(245, 245, 245, 0.6);
+  --nav-bottom-bg: rgba(245, 245, 245, 0.95);
+  --gradient-spot-1: rgba(210, 210, 215, 0.4);
+  --gradient-spot-2: rgba(215, 215, 220, 0.3);
+  --gradient-spot-3: rgba(220, 220, 225, 0.2);
+  --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.25);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --avatar-inner-bg: #f5f5f5;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,14 +65,15 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
-  background: #0a0a0a;
-  color: #fff;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Animated dark gradient background */
+/* Animated gradient background */
 body::before {
   content: '';
   position: fixed;
@@ -27,8 +81,9 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #0a0a0a;
+  background: var(--bg);
   z-index: -2;
+  transition: background 0.4s ease;
 }
 
 body::after {
@@ -39,9 +94,9 @@ body::after {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(40, 40, 45, 0.4) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(35, 35, 40, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(25, 25, 30, 0.2) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 20%, var(--gradient-spot-1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, var(--gradient-spot-2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, var(--gradient-spot-3) 0%, transparent 60%);
   z-index: -1;
   animation: backgroundPulse 12s ease-in-out infinite;
 }
@@ -62,7 +117,7 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #0a0a0a;
+  background: var(--bg);
   transition: opacity 0.5s ease;
 }
 
@@ -86,11 +141,15 @@ body::after {
   opacity: 0.9;
 }
 
+[data-theme="light"] .loading-logo {
+  filter: invert(1);
+}
+
 .loading-spinner {
   width: 28px;
   height: 28px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-top-color: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(var(--text-rgb), 0.1);
+  border-top-color: rgba(var(--text-rgb), 0.6);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -133,22 +192,46 @@ button, a, input, textarea {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(var(--text-rgb), 0.15);
+  color: var(--text);
 }
 
 /* Focus styles for accessibility */
 :focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline: 2px solid rgba(var(--text-rgb), 0.4);
   outline-offset: 2px;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 50%;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  background: rgba(var(--text-rgb), 0.08);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
 }

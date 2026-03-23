@@ -249,6 +249,7 @@ function Admin() {
     return (
       <div className="admin-login">
         <form onSubmit={handleLogin} className="login-form">
+          <img src="/admin-logo.png" alt="Virtue" className="admin-login-logo" />
           <h1>Admin Access</h1>
           <input
             type="password"

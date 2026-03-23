@@ -12,7 +12,8 @@
 .roster-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  opacity: 0.95;
   text-align: center;
   margin: 0 0 2rem;
   letter-spacing: 0.15em;
@@ -30,22 +31,22 @@
   width: 100%;
   padding: 0.85rem 1.25rem;
   padding-right: 3rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 8px;
-  color: #fff;
+  color: var(--text);
   font-size: 0.95rem;
   transition: all 0.25s ease;
 }
 
 .search-input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: var(--card-hover-bg);
+  border-color: var(--input-focus-border);
 }
 
 .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--text-faint);
 }
 
 .search-clear {
@@ -57,7 +58,7 @@
   border: none;
   padding: 0.25rem;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
   transition: color 0.25s ease;
   display: flex;
   align-items: center;
@@ -65,7 +66,7 @@
 }
 
 .search-clear:hover {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text);
 }
 
 .search-clear svg {
@@ -75,7 +76,7 @@
 
 .no-results {
   text-align: center;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
   font-size: 0.95rem;
   padding: 3rem 0;
 }
@@ -114,7 +115,7 @@
 .featured-title {
   font-size: 0.85rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-subtle);
   margin: 0 0 2rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -167,7 +168,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: #0a0a0a;
+  background: var(--avatar-inner-bg);
   z-index: -1;
 }
 
@@ -191,7 +192,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 0.5rem;
-  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -214,7 +215,7 @@
 }
 
 .featured-player-container .stat-label {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
   font-size: 0.7rem;
   letter-spacing: 2px;
 }
@@ -230,10 +231,10 @@
 .section-title {
   font-size: 0.8rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
   margin: 0 0 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--card-border);
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
@@ -252,7 +253,7 @@
   align-items: center;
   min-height: calc(100vh - 70px);
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
   letter-spacing: 0.05em;
 }
 
@@ -262,7 +263,7 @@
 
 .mock-notice {
   text-align: center;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-faint);
   font-size: 0.75rem;
   margin-bottom: 2rem;
   letter-spacing: 0.05em;

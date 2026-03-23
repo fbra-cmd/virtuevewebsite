@@ -1,7 +1,8 @@
 .footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--card-border);
   padding: 2.5rem 2rem;
   margin-top: auto;
+  transition: border-color 0.4s ease;
 }
 
 .footer-container {
@@ -19,7 +20,7 @@
 }
 
 .footer-socials a {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-subtle);
   transition: all 0.25s ease;
   display: flex;
   align-items: center;
@@ -27,7 +28,8 @@
 }
 
 .footer-socials a:hover {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  opacity: 0.9;
   transform: translateY(-2px);
 }
 
@@ -38,7 +40,7 @@
 
 .footer-copyright {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-faint);
   letter-spacing: 0.05em;
 }
 

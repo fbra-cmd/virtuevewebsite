@@ -3,11 +3,12 @@
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(10, 10, 10, 0.4);
+  background: var(--nav-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--card-border);
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
 .navbar-container {
@@ -32,7 +33,7 @@
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -50,12 +51,12 @@
   left: 50%;
   width: 0;
   height: 1px;
-  background: #fff;
+  background: var(--text);
   transition: width 0.25s ease, left 0.25s ease;
 }
 
 .nav-link:hover {
-  color: #fff;
+  color: var(--text);
 }
 
 .nav-link:hover::after {
@@ -64,7 +65,7 @@
 }
 
 .nav-link.active {
-  color: #fff;
+  color: var(--text);
 }
 
 .nav-link.active::after {
@@ -75,10 +76,11 @@
 .navbar-socials {
   display: flex;
   gap: 1.25rem;
+  align-items: center;
 }
 
 .social-icon {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-subtle);
   transition: color 0.25s ease, transform 0.25s ease;
   display: flex;
   align-items: center;
@@ -86,7 +88,7 @@
 }
 
 .social-icon:hover {
-  color: #fff;
+  color: var(--text);
   transform: translateY(-2px);
 }
 
@@ -110,6 +112,10 @@
 .navbar-logo img {
   height: 70px;
   width: auto;
+}
+
+[data-theme="light"] .navbar-logo img {
+  filter: invert(1);
 }
 
 /* Mobile bottom bar - hidden on desktop */
@@ -152,14 +158,15 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(10, 10, 10, 0.95);
+    background: var(--nav-bottom-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--card-border);
     z-index: 1000;
     justify-content: space-around;
     padding: 0.5rem 0;
     padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    transition: background 0.4s ease, border-color 0.4s ease;
   }
 
   .mobile-tab {
@@ -167,7 +174,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-subtle);
     text-decoration: none;
     padding: 0.4rem 1.5rem;
     transition: color 0.2s ease;
@@ -186,7 +193,7 @@
   }
 
   .mobile-tab.active {
-    color: #fff;
+    color: var(--text);
   }
 }
 
