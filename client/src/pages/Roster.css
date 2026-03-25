@@ -238,38 +238,6 @@
   display: none;
 }
 
-/* Share button */
-.share-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  padding: 0.6rem 1.25rem;
-  background: rgba(var(--text-rgb), 0.05);
-  border: 1px solid rgba(var(--text-rgb), 0.1);
-  border-radius: 24px;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.share-btn:hover {
-  color: var(--text);
-  background: rgba(var(--text-rgb), 0.08);
-  border-color: rgba(var(--text-rgb), 0.2);
-  transform: translateY(-1px);
-}
-
-.share-btn svg {
-  width: 14px;
-  height: 14px;
-}
-
 .roster-section {
   margin-bottom: 4rem;
 }
