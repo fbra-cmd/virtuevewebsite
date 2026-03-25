@@ -134,20 +134,29 @@
   background: transparent;
   border: none;
   max-width: 320px;
-  padding: 0;
+  box-shadow: none;
 }
 
 .featured-player-container .member-card:hover {
   background: transparent;
   border: none;
   box-shadow: none;
-  transform: translateY(-8px);
+}
+
+.featured-player-container .card-shine,
+.featured-player-container .card-holo {
+  display: none;
+}
+
+.featured-player-container .card-top-border {
+  display: none;
 }
 
 .featured-player-container .member-avatar {
   width: 200px;
   height: 200px;
   border: none;
+  border-radius: 50%;
   position: relative;
   box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), 0 0 60px rgba(139, 92, 246, 0.1);
   animation: avatar-glow-smooth 6s linear infinite;
@@ -218,6 +227,14 @@
   color: var(--text-subtle);
   font-size: 0.7rem;
   letter-spacing: 2px;
+}
+
+.featured-player-container .member-socials {
+  border-top: none;
+}
+
+.featured-player-container .card-divider {
+  display: none;
 }
 
 .roster-section {
