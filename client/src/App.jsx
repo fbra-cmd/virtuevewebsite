@@ -58,7 +58,7 @@ function AppContent() {
       </main>
       {!isAdminPage && <Footer />}
 
-      {/* Fex easter egg: sticky images at bottom corners */}
+      {/* Fex easter egg: sticky images */}
       {easterEgg === 'fex' && (
         <>
           <div className="egg-sticky-image egg-sticky-right">
@@ -66,6 +66,9 @@ function AppContent() {
           </div>
           <div className="egg-sticky-image egg-sticky-left">
             <img src="/click_fex_2.png" alt="" />
+          </div>
+          <div className="egg-topleft-gif">
+            <img src="/giphy.gif" alt="" />
           </div>
         </>
       )}

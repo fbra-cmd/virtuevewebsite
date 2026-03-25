@@ -109,8 +109,28 @@
   border-radius: 12px;
 }
 
+/* Top-left gif (desktop only) */
+.egg-topleft-gif {
+  position: fixed;
+  top: 90px;
+  left: 1rem;
+  z-index: 998;
+  pointer-events: none;
+}
+
+.egg-topleft-gif img {
+  width: 200px;
+  height: auto;
+  border-radius: 12px;
+  opacity: 0.9;
+}
+
 @media (max-width: 768px) {
   .egg-sticky-image {
+    display: none;
+  }
+
+  .egg-topleft-gif {
     display: none;
   }
 }
