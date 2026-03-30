@@ -16,9 +16,9 @@
   --input-focus-border: rgba(255, 255, 255, 0.25);
   --nav-bg: rgba(10, 10, 10, 0.4);
   --nav-bottom-bg: rgba(10, 10, 10, 0.95);
-  --gradient-spot-1: rgba(40, 40, 45, 0.4);
-  --gradient-spot-2: rgba(35, 35, 40, 0.3);
-  --gradient-spot-3: rgba(25, 25, 30, 0.2);
+  --gradient-spot-1: rgba(80, 15, 15, 0.4);
+  --gradient-spot-2: rgba(60, 10, 10, 0.3);
+  --gradient-spot-3: rgba(45, 8, 8, 0.2);
   --scrollbar-thumb: rgba(255, 255, 255, 0.15);
   --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
   --shadow-color: rgba(0, 0, 0, 0.4);
@@ -42,9 +42,9 @@
   --input-focus-border: rgba(0, 0, 0, 0.3);
   --nav-bg: rgba(245, 245, 245, 0.6);
   --nav-bottom-bg: rgba(245, 245, 245, 0.95);
-  --gradient-spot-1: rgba(210, 210, 215, 0.4);
-  --gradient-spot-2: rgba(215, 215, 220, 0.3);
-  --gradient-spot-3: rgba(220, 220, 225, 0.2);
+  --gradient-spot-1: rgba(200, 160, 160, 0.4);
+  --gradient-spot-2: rgba(210, 170, 170, 0.3);
+  --gradient-spot-3: rgba(215, 180, 180, 0.2);
   --scrollbar-thumb: rgba(0, 0, 0, 0.15);
   --scrollbar-thumb-hover: rgba(0, 0, 0, 0.25);
   --shadow-color: rgba(0, 0, 0, 0.1);
@@ -188,26 +188,38 @@ body::before {
 body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -20%;
+  left: -20%;
+  right: -20%;
+  bottom: -20%;
   background:
-    radial-gradient(ellipse at 20% 20%, var(--gradient-spot-1) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, var(--gradient-spot-2) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 25%, var(--gradient-spot-1) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 75%, var(--gradient-spot-2) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, var(--gradient-spot-3) 0%, transparent 60%);
   z-index: -1;
-  animation: backgroundPulse 12s ease-in-out infinite;
+  animation: backgroundDrift 16s ease-in-out infinite;
 }
 
-@keyframes backgroundPulse {
-  0%, 100% {
-    opacity: 0.8;
-    transform: scale(1);
+@keyframes backgroundDrift {
+  0% {
+    opacity: 0.7;
+    transform: scale(1) translate(0, 0);
+  }
+  25% {
+    opacity: 0.9;
+    transform: scale(1.06) translate(2%, -1%);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.1) translate(-1%, 2%);
+  }
+  75% {
+    opacity: 0.85;
+    transform: scale(1.04) translate(-2%, -1%);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1) translate(0, 0);
   }
 }
 

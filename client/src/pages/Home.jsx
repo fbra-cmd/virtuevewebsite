@@ -95,6 +95,38 @@ function Home() {
         </div>
       </section>
 
+      <section className="seven-sins">
+        <div className="sins-glow"></div>
+        <h2 className="sins-title">THE SEVEN DEADLY SINS SERIES</h2>
+        <p className="sins-description">
+          The Seven Deadly Sins is a series of Teamtages — each one embodying a Sin.
+        </p>
+        <div className="sins-poster-wrapper">
+          <div className="sins-poster-frame">
+            <img
+              src="/ve-poster.jpg"
+              alt="Seven Deadly Sins Series Poster"
+              className="sins-poster"
+            />
+          </div>
+        </div>
+        <div className="sins-list">
+          <span className="sin-tag">Gluttony</span>
+          <span className="sin-divider">/</span>
+          <span className="sin-tag">Greed</span>
+          <span className="sin-divider">/</span>
+          <span className="sin-tag">Sloth</span>
+          <span className="sin-divider">/</span>
+          <span className="sin-tag">Envy</span>
+          <span className="sin-divider">/</span>
+          <span className="sin-tag">Wrath</span>
+          <span className="sin-divider">/</span>
+          <span className="sin-tag">Pride</span>
+          <span className="sin-divider">/</span>
+          <span className="sin-tag">Lust</span>
+        </div>
+      </section>
+
       <section className="recent-videos">
         <h2 className="section-title">Recent Videos</h2>
         <div className="videos-grid">

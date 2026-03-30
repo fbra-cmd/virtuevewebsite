@@ -61,6 +61,153 @@
   display: block;
 }
 
+/* Seven Deadly Sins Section */
+.seven-sins {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.sins-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(180, 30, 30, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  animation: sinsGlowPulse 6s ease-in-out infinite;
+}
+
+@keyframes sinsGlowPulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+.sins-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  opacity: 0.9;
+}
+
+.sins-description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0 0 2.5rem;
+  line-height: 1.7;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: 0.01em;
+}
+
+.sins-poster-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.sins-poster-frame {
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(180, 30, 30, 0.2);
+  box-shadow:
+    0 0 40px rgba(140, 20, 20, 0.15),
+    0 20px 60px var(--shadow-color);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.sins-poster-frame:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 60px rgba(140, 20, 20, 0.25),
+    0 25px 70px var(--shadow-color);
+}
+
+.sins-poster {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+}
+
+.sins-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sin-tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-subtle);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.sin-tag:hover {
+  color: #c43030;
+}
+
+.sin-divider {
+  color: rgba(180, 30, 30, 0.3);
+  font-size: 0.7rem;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .seven-sins {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .sins-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+  }
+
+  .sins-description {
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .sins-poster {
+    max-width: 360px;
+  }
+
+  .sins-glow {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sins-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+  }
+
+  .sins-poster {
+    max-width: 300px;
+  }
+
+  .sin-tag {
+    font-size: 0.6rem;
+  }
+}
+
 /* Recent Videos Section */
 .recent-videos {
   max-width: 1200px;
